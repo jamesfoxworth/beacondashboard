@@ -212,7 +212,7 @@ def plot_law_savings_bars():
                          'YTD Savings': 'Savings (YTD)'},
                  text='YTD Savings')
     fig.update_traces(marker_color=blue)
-    fig.update_layout(width=w, height=l)
+    fig.update_layout(width=w, height=l+100)
     st.plotly_chart(fig)
 
 
@@ -239,7 +239,7 @@ def plot_law_cases_bars():
                          'YTD Savings': 'Savings (YTD)'},
                  text='Count (YTD)')
     fig.update_traces(marker_color=blue)
-    fig.update_layout(width=w, height=l)
+    fig.update_layout(width=w, height=l+100)
     st.plotly_chart(fig)
 
 
@@ -269,7 +269,7 @@ def plot_service_bars():
         xaxis_title="Service",
         yaxis_title="Count (YTD)"
     )
-    fig.update_layout(width=w, height=l)
+    fig.update_layout(width=w, height=l+100)
     st.plotly_chart(fig)
 
 
