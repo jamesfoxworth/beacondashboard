@@ -1,9 +1,6 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 from datetime import datetime
-import plotly.graph_objects as go
 import regex as re
 import plotly.express as px
 import warnings
@@ -256,14 +253,16 @@ def plot_service_bars():
         bar_services = bar_services.drop(i)
 
     top5_serv = bar_services.sort_values(by='Count (YTD)', ascending=False)
-    fig = go.Figure()
-    fig.add_trace(go.Bar(
-        x=top5_serv['Service Type'],
-        y=top5_serv['Count (YTD)'],
-        text=top5_serv['Count (YTD)'],
-        textposition='auto',
-        marker_color=blue
-    ))
+    fig = px.bar(
+        top5_serv,
+        x='Service Type',
+        y='Count (YTD)',
+        text='Count (YTD)',
+        color='Count (YTD)',
+        color_continuous_scale='blues'
+    )
+
+    fig.update_traces(textposition='auto', marker_color=blue)
 
     fig.update_layout(
         title="Top Essential Services",
