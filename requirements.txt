@@ -1,5 +1,4 @@
 streamlit
 plotly.express
-plotly.graph_objects
 regex
 pandas
