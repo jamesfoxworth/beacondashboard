@@ -294,106 +294,106 @@ def main():
         clean_law_savings()
         clean_services()
 
-    st.header("Essential Services")
-    service_col1, service_col2 = st.columns(2)
-
-    with service_col1:
-        default = "Clients in Program"
-        idx = list(service_titles.keys()).index(
-            default) if default in list(service_titles.keys()) else 0
-        selected_option = st.selectbox(
-            "Essential Services", list(service_titles.keys()))
-        show_line_df(selected_option, essential_services_t, service_titles)
-
-    with service_col2:
-        plot_service_bars()
-
-    st.header("Brigid's Hope")
-    hope_col1, hope_col2 = st.columns(2)
-
-    with hope_col1:
-        keys = ['Increased Education/Income Post-Graduation', 'Did Not Increase']
-        col = "Count (YTD)"
-        data = [brigids_hope.iloc[13][col], 1-brigids_hope.iloc[13][col]]
-        fig = px.pie(names=keys, values=data, title='Percentage of Individuals Based on Post-Graduation Income/Education Increase',
+        st.header("Essential Services")
+        service_col1, service_col2 = st.columns(2)
+    
+        with service_col1:
+            default = "Clients in Program"
+            idx = list(service_titles.keys()).index(
+                default) if default in list(service_titles.keys()) else 0
+            selected_option = st.selectbox(
+                "Essential Services", list(service_titles.keys()))
+            show_line_df(selected_option, essential_services_t, service_titles)
+    
+        with service_col2:
+            plot_service_bars()
+    
+        st.header("Brigid's Hope")
+        hope_col1, hope_col2 = st.columns(2)
+    
+        with hope_col1:
+            keys = ['Increased Education/Income Post-Graduation', 'Did Not Increase']
+            col = "Count (YTD)"
+            data = [brigids_hope.iloc[13][col], 1-brigids_hope.iloc[13][col]]
+            fig = px.pie(names=keys, values=data, title='Percentage of Individuals Based on Post-Graduation Income/Education Increase',
+                         color_discrete_sequence=[blue, yellow])
+    
+            fig.update_traces(textposition='outside', textinfo='percent+label')
+            fig.update_layout(width=w, height=l)
+            st.plotly_chart(fig)
+    
+        with hope_col2:
+            keys = ['Moved into Stable Housing',
+                    'Did Not Move Into Stable Housing']
+            col = "Count (YTD)"
+            data = [brigids_hope.iloc[12][col], 1-brigids_hope.iloc[12][col]]
+            fig = px.pie(names=keys, values=data, title='Percentage of Individuals who Moved Into Stable Housing at the End of the Program',
+                         color_discrete_sequence=[blue, yellow])
+    
+            fig.update_traces(textposition='outside', textinfo='percent+label')
+            fig.update_layout(width=w, height=l)
+            st.plotly_chart(fig)
+    
+        st.header("Beacon Law (Cases)")
+        law_col1, law_col2 = st.columns(2)
+    
+        with law_col1:
+            default = "Closed Cases - Total # (BL)"
+            idx = list(law_case_titles.keys()).index(
+                default) if default in list(law_case_titles.keys()) else 0
+            selected_option = st.selectbox(
+                "Beacon Law (Cases):", list(law_case_titles.keys()), index=idx)
+            show_line_df(selected_option,
+                         beacon_law_counts_t, law_case_titles)
+    
+        with law_col2:
+            plot_law_cases_bars()
+    
+        st.header("Beacon Law (Savings)")
+        savings_col1, savings_col2 = st.columns(2)
+    
+        with savings_col1:
+            default = "Total Savings"
+            idx = list(savings_titles.keys()).index(
+                default) if default in list(savings_titles.keys()) else 0
+            selected_option = st.selectbox(
+                "Beacon Law (Savings):", list(savings_titles.keys()), index=idx)
+            show_line_df(selected_option, beacon_law_savings_t, savings_titles)
+    
+        with savings_col2:
+            plot_law_savings_bars()
+            st.empty()
+    
+        keys = ['Back Awards and Ongoing Benefits (Social Security & Consumer)',
+                'Cost Savings/Costs Avoided (ID Restoration, Record Clearing, and Landlord/Tenant)']
+        col = 'YTD Savings'
+        total = beacon_law.iloc[9][col]
+        benefits = beacon_law.iloc[6][col] + beacon_law.iloc[0][col]
+        data = [benefits, total-benefits]
+        fig = px.pie(names=keys, values=data, title='Beacon Law: Dollar Outcomes',
                      color_discrete_sequence=[blue, yellow])
-
+    
         fig.update_traces(textposition='outside', textinfo='percent+label')
         fig.update_layout(width=w, height=l)
-        st.plotly_chart(fig)
-
-    with hope_col2:
-        keys = ['Moved into Stable Housing',
-                'Did Not Move Into Stable Housing']
-        col = "Count (YTD)"
-        data = [brigids_hope.iloc[12][col], 1-brigids_hope.iloc[12][col]]
-        fig = px.pie(names=keys, values=data, title='Percentage of Individuals who Moved Into Stable Housing at the End of the Program',
-                     color_discrete_sequence=[blue, yellow])
-
-        fig.update_traces(textposition='outside', textinfo='percent+label')
-        fig.update_layout(width=w, height=l)
-        st.plotly_chart(fig)
-
-    st.header("Beacon Law (Cases)")
-    law_col1, law_col2 = st.columns(2)
-
-    with law_col1:
-        default = "Closed Cases - Total # (BL)"
-        idx = list(law_case_titles.keys()).index(
-            default) if default in list(law_case_titles.keys()) else 0
-        selected_option = st.selectbox(
-            "Beacon Law (Cases):", list(law_case_titles.keys()), index=idx)
-        show_line_df(selected_option,
-                     beacon_law_counts_t, law_case_titles)
-
-    with law_col2:
-        plot_law_cases_bars()
-
-    st.header("Beacon Law (Savings)")
-    savings_col1, savings_col2 = st.columns(2)
-
-    with savings_col1:
-        default = "Total Savings"
-        idx = list(savings_titles.keys()).index(
-            default) if default in list(savings_titles.keys()) else 0
-        selected_option = st.selectbox(
-            "Beacon Law (Savings):", list(savings_titles.keys()), index=idx)
-        show_line_df(selected_option, beacon_law_savings_t, savings_titles)
-
-    with savings_col2:
-        plot_law_savings_bars()
-        st.empty()
-
-    keys = ['Back Awards and Ongoing Benefits (Social Security & Consumer)',
-            'Cost Savings/Costs Avoided (ID Restoration, Record Clearing, and Landlord/Tenant)']
-    col = 'YTD Savings'
-    total = beacon_law.iloc[9][col]
-    benefits = beacon_law.iloc[6][col] + beacon_law.iloc[0][col]
-    data = [benefits, total-benefits]
-    fig = px.pie(names=keys, values=data, title='Beacon Law: Dollar Outcomes',
-                 color_discrete_sequence=[blue, yellow])
-
-    fig.update_traces(textposition='outside', textinfo='percent+label')
-    fig.update_layout(width=w, height=l)
-    st.plotly_chart(fig, use_container_width=True)
-
-    st.header("Housing (Coordinated Access / Navigation)")
-    housing_col1, housing_col2 = st.columns(2)
-
-    with housing_col1:
-        show_line_df("Housing Assessments (Internal)", clean(ca), ca_titles)
-
-    with housing_col2:
-        keys = ['Move-ins', 'Unable to Contact<br>Or Locate',
-                'Jail/Hospitalization', 'Refused', 'Other']
-        col = "Count (YTD)"
-        data = [navigation.iloc[2][col], navigation.iloc[3][col],
-                navigation.iloc[4][col], navigation.iloc[5][col], navigation.iloc[6][col]]
-        fig = px.pie(names=keys, values=data, title='Navigation Move-ins')
-
-        fig.update_traces(textposition='outside', textinfo='percent+label')
-        fig.update_layout(width=w, height=l)
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
+    
+        st.header("Housing (Coordinated Access / Navigation)")
+        housing_col1, housing_col2 = st.columns(2)
+    
+        with housing_col1:
+            show_line_df("Housing Assessments (Internal)", clean(ca), ca_titles)
+    
+        with housing_col2:
+            keys = ['Move-ins', 'Unable to Contact<br>Or Locate',
+                    'Jail/Hospitalization', 'Refused', 'Other']
+            col = "Count (YTD)"
+            data = [navigation.iloc[2][col], navigation.iloc[3][col],
+                    navigation.iloc[4][col], navigation.iloc[5][col], navigation.iloc[6][col]]
+            fig = px.pie(names=keys, values=data, title='Navigation Move-ins')
+    
+            fig.update_traces(textposition='outside', textinfo='percent+label')
+            fig.update_layout(width=w, height=l)
+            st.plotly_chart(fig)
 
 
 if __name__ == "__main__":
